@@ -18,6 +18,7 @@ class DrawerScaffold extends StatefulWidget {
   final Widget bottomNavigationBar;
   final FloatingActionButtonLocation floatingActionButtonLocation;
   final FloatingActionButtonAnimator floatingActionButtonAnimator;
+  final Widget scaffoldBody;
 
   final List<BoxShadow> contentShadow;
 
@@ -42,6 +43,7 @@ class DrawerScaffold extends StatefulWidget {
     this.floatingActionButtonLocation,
     this.floatingActionButton,
     this.floatingActionButtonAnimator,
+    this.scaffoldBody,
   });
 
   @override
@@ -145,7 +147,7 @@ class _DrawerScaffoldState extends State<DrawerScaffold>
     var _scaffoldWidget = new Scaffold(
       backgroundColor: Colors.transparent,
       appBar: createAppBar(),
-      body: body,
+      body: widget.scaffoldBody,
       extendBody: widget.extendedBody != null ? widget.extendedBody : false,
       floatingActionButton: widget.floatingActionButton != null
           ? widget.floatingActionButton
