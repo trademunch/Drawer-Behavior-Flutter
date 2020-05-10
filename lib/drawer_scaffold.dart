@@ -167,55 +167,55 @@ class _DrawerScaffoldState extends State<DrawerScaffold>
     Widget content = !widget.contentView.enableGestures
         ? _scaffoldWidget
         : Center(
-      child: Container(
-        child: GestureDetector(
-          child: AbsorbPointer(
-              absorbing: menuController.isOpen() && widget.showAppBar,
-              child: _scaffoldWidget),
-          onTap: () {
-            if (menuController.isOpen()) menuController.close();
-          },
-          onHorizontalDragStart: (details) {
-            isOpening = !menuController.isOpen();
-            if (menuController.isOpen() &&
-                details.globalPosition.dx < maxSlideAmount + 60) {
-              startDx = details.globalPosition.dx;
-            } else if (details.globalPosition.dx < 60)
-              startDx = details.globalPosition.dx;
-            else {
-              startDx = -1;
-            }
-          },
-          onHorizontalDragUpdate: (details) {
-            if (startDx == -1) return;
-            double dx = (details.globalPosition.dx - startDx);
-            if (isOpening && dx > 0 && dx <= maxSlideAmount) {
-              percentage = Utils.fixed(dx / maxSlideAmount, 3);
+            child: Container(
+              child: GestureDetector(
+                child: AbsorbPointer(
+                    absorbing: menuController.isOpen() && widget.showAppBar,
+                    child: _scaffoldWidget),
+                onTap: () {
+                  if (menuController.isOpen()) menuController.close();
+                },
+                onHorizontalDragStart: (details) {
+                  isOpening = !menuController.isOpen();
+                  if (menuController.isOpen() &&
+                      details.globalPosition.dx < maxSlideAmount + 60) {
+                    startDx = details.globalPosition.dx;
+                  } else if (details.globalPosition.dx < 60)
+                    startDx = details.globalPosition.dx;
+                  else {
+                    startDx = -1;
+                  }
+                },
+                onHorizontalDragUpdate: (details) {
+                  if (startDx == -1) return;
+                  double dx = (details.globalPosition.dx - startDx);
+                  if (isOpening && dx > 0 && dx <= maxSlideAmount) {
+                    percentage = Utils.fixed(dx / maxSlideAmount, 3);
 
-              menuController._animationController.animateTo(percentage,
-                  duration: Duration(microseconds: 0));
-              menuController._animationController
-                  .notifyStatusListeners(AnimationStatus.forward);
-            } else if (!isOpening && dx <= 0 && dx >= -maxSlideAmount) {
-              percentage = Utils.fixed(1.0 + dx / maxSlideAmount, 3);
+                    menuController._animationController.animateTo(percentage,
+                        duration: Duration(microseconds: 0));
+                    menuController._animationController
+                        .notifyStatusListeners(AnimationStatus.forward);
+                  } else if (!isOpening && dx <= 0 && dx >= -maxSlideAmount) {
+                    percentage = Utils.fixed(1.0 + dx / maxSlideAmount, 3);
 
-              menuController._animationController.animateTo(percentage,
-                  duration: Duration(microseconds: 0));
-              menuController._animationController
-                  .notifyStatusListeners(AnimationStatus.reverse);
-            }
-          },
-          onHorizontalDragEnd: (details) {
-            if (startDx == -1) return;
-            if (percentage < 0.5) {
-              menuController.close();
-            } else {
-              menuController.open();
-            }
-          },
-        ),
-      ),
-    );
+                    menuController._animationController.animateTo(percentage,
+                        duration: Duration(microseconds: 0));
+                    menuController._animationController
+                        .notifyStatusListeners(AnimationStatus.reverse);
+                  }
+                },
+                onHorizontalDragEnd: (details) {
+                  if (startDx == -1) return;
+                  if (percentage < 0.5) {
+                    menuController.close();
+                  } else {
+                    menuController.open();
+                  }
+                },
+              ),
+            ),
+          );
 
     bool isIOS = Platform.isIOS;
 
