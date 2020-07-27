@@ -20,7 +20,7 @@ class MenuView extends StatefulWidget {
     this.itemBuilder,
   }) : super(key: menuScreenKey);
 
-  final double maxSlideAmount = 275.0;
+  final double maxSlideAmount = 300.0;
 
   final Menu menu;
   final String selectedItemId;
