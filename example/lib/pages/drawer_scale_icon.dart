@@ -36,14 +36,17 @@ class _DrawerScaleIconState extends State<DrawerScaleIcon> {
           },
         )
       ],
-      builder: (context, id) => IndexedStack(
-        index: id,
-        children: menu.items
-            .map((e) => Center(
-                  child: Text("Page~${e.title}"),
-                ))
-            .toList(),
+      body: Center(
+        child: Text("Page~"),
       ),
+//      builder: (context, id) => IndexedStack(
+//        index: id,
+//        children: menu.items
+//            .map((e) => Center(
+//                  child: Text("Page~${e.title}"),
+//                ))
+//            .toList(),
+//      ),
     );
   }
 }

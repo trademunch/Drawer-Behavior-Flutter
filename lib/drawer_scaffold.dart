@@ -1,4 +1,3 @@
-import 'dart:developer' as Dev;
 import 'dart:io' show Platform;
 import 'dart:math';
 
@@ -15,6 +14,7 @@ class DrawerScaffold extends StatefulWidget {
   @deprecated
   final Screen contentView;
   final ScreenBuilder builder;
+  final Widget body;
 
   final AppBar appBar;
   final Direction mainDrawer;
@@ -48,6 +48,7 @@ class DrawerScaffold extends StatefulWidget {
     this.cornerRadius = 16.0,
     this.contentView,
     this.controller,
+    this.body,
     this.extendedBody = false,
     this.bottomNavigationBar,
     this.floatingActionButtonLocation,
@@ -83,6 +84,7 @@ class _DrawerScaffoldState<T> extends State<DrawerScaffold>
       0,
       widget.drawers
           .indexWhere((element) => element.direction == widget.mainDrawer));
+
   @override
   void initState() {
     super.initState();
@@ -192,6 +194,7 @@ class _DrawerScaffoldState<T> extends State<DrawerScaffold>
   Widget body;
 
   T selectedItemId;
+
   bool isDrawerOpen() {
     return menuControllers.where((element) => element.isOpen()).isNotEmpty;
   }
@@ -206,7 +209,8 @@ class _DrawerScaffoldState<T> extends State<DrawerScaffold>
     if (selectedItemId != widget.drawers[listenDrawerIndex].selectedItemId ||
         body == null) {
       selectedItemId = widget.drawers[listenDrawerIndex].selectedItemId;
-      body = widget.builder?.call(context, selectedItemId) ??
+      body = widget.body ??
+          widget.builder?.call(context, selectedItemId) ??
           widget.contentView?.contentBuilder(context);
     }
     Widget _scaffoldWidget = new Scaffold(
@@ -430,6 +434,7 @@ class _DrawerScaffoldState<T> extends State<DrawerScaffold>
 class DrawerScaffoldMenuController extends StatefulWidget {
   final DrawerScaffoldBuilder builder;
   final Direction direction;
+
   DrawerScaffoldMenuController({
     this.builder,
     this.direction,
@@ -585,6 +590,7 @@ class DrawerScaffoldController {
   DrawerScaffoldController({Direction open}) : _open = open;
 
   Direction _open;
+
   toggle([Direction direction = Direction.left]) {
     if (isOpen())
       closeDrawer(direction);
